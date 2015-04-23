@@ -1,2 +1,2 @@
 # gdoc-json-parser
-Parse google doc to json
+Google doc to json
