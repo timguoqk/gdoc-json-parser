@@ -1,5 +1,5 @@
 import sys
-import urllib
+import urllib.request
 import json
 
 
@@ -12,31 +12,34 @@ def clean_json(raw_data):
         for col in cols:
             row[col[4:]] = entry[col]['$t']
         data.append(row)
-    return data
+    return json.JSONEncoder().encode(data)
 
-if __name__ == '__main__':
-    if len(sys.argv) == 0:
-        usage_msg = "%prog URL OUTPUT\n" + \
+
+def main():
+    if len(sys.argv) == 2:
+        output_file = open('out.json', 'w')
+    if len(sys.argv) == 3:
+        output_file = open(sys.argv[1], 'w')
+        usage_msg = "gdoc-json-parser URL OUTPUT\n" + \
             "Convert spreadsheet in URL to json."
+        print('Wrong number of operands')
         print(usage_msg)
         return
-    if len(sys.argv) != 1 and len(sys.argv) != 2:
-        print("wrong number of operands")
 
-    url_id = sys.argv[0].split('/')[-1]
+    url_id = sys.argv[1].rstrip('/').split('/')[-1]
     url = "https://spreadsheets.google.com/feeds/list/" + \
         url_id + "/od6/public/values?alt=json"
     try:
-        response = urllib.urlopen(url)
-    except Exception as e:
+        response = urllib.request.urlopen(url)
+        raw_data = json.loads(response.read().decode())
+    except urllib.error.URLError:
         print("failed to open url")
-        raise e
+        return
 
-    raw_data = json.loads(response.read())
     data = clean_json(raw_data)
-    if len(sys.argv) == 1:
-        output_file = open('out.json', 'w')
-    else:
-        output_file = open(sys.argv[1], 'w')
     output_file.write(data)
     output_file.close()
+    print('Output to ' + output_file)
+
+if __name__ == '__main__':
+    main()
