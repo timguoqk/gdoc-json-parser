@@ -33,7 +33,7 @@ def main():
         response = urllib.request.urlopen(url)
         raw_data = json.loads(response.read().decode())
     except urllib.error.URLError:
-        print("failed to open url")
+        print('failed to open url')
         return
 
     data = clean_json(raw_data)
