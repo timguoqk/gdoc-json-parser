@@ -1,4 +1,4 @@
-The tool converts a google spreadsheet to an array of clean JSON objects that can be easily used.
+This tool converts a google spreadsheet to an array of clean JSON objects that can be easily used.
 
 Install the tool using pip:
 ::
