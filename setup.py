@@ -1,10 +1,14 @@
 from setuptools import setup
 
+readme = open('README.rst', 'r')
+README_TEXT = readme.read()
+readme.close()
+
 # TODO: documentations
 setup(name='gdoc-json-parser',
-      version='1.0.0.dev1',
+      version='1.0.0.dev3',
       description='Convert Google spreadsheet to clean json.',
-      long_description='Convert Google spreadsheet to clean json.',
+      long_description=README_TEXT,
       author='Tim Guo',
       author_email='qikun.guo@engineering.ucla.edu',
       url='https://github.com/timguoqk/gdoc-json-parser',
@@ -22,5 +26,5 @@ setup(name='gdoc-json-parser',
                    'Programming Language :: Python :: 3.4'],
       keywords='json google spreadsheet parser',
       license='MIT',
-      py_modules=['gdoc-json-parser'],
+      py_modules=[],
       )
